@@ -1,30 +1,39 @@
+// Initialize the counter variable
 let count = 0;
 
+// Select the counter display and the parent container
 const value = document.querySelector("#value");
-const btns = document.querySelectorAll(".btn");
+const container = document.querySelector(".button-container");
 
-btns.forEach(function (btn) {
-    btn.addEventListener("click", function (e) {
-        const styles = e.currentTarget.classList;
+// Attach a click event listener to the container using an arrow function
+container.addEventListener("click", (e) => {
+    // Determine the element clicked (targeting the button even if the icon is clicked)
+    const targetBtn = e.target.closest(".btn");
 
-        if (styles.contains("decrease")) {
+    // Only proceed if a button with the class "btn" was clicked
+    if (targetBtn && targetBtn.classList.contains("btn")) {
+        
+        const id = targetBtn.id;
+
+        // if/else if/else chain to determine counter action based on ID
+        if (id === "decrease") {
             count--;
-        } else if (styles.contains("increase")) {
+        } else if (id === "increase") {
             count++;
         } else {
             count = 0;
         }
 
+        // Update the counter text on screen using .innerText
+        value.innerText = count;
+
+        // if/else if/else chain to apply the correct color based on current value
         if (count > 0) {
             value.style.color = "green";
-        }
-        if (count < 0) {
+        } else if (count < 0) {
             value.style.color = "red";
-        }
-        if (count === 0) {
+        } else {
             value.style.color = "#222";
         }
-
-        value.textContent = count;
-    });
+    }
 });
